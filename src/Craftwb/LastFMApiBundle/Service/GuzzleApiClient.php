@@ -61,7 +61,7 @@ class GuzzleApiClient implements ApiClient
     {
         return [
             'query' => [
-                'method' => $method,
+                'method' => strtolower($method),
                 'user' => $this->container->getParameter('lastfm_user'),
                 'api_key' => $this->container->getParameter('lastfm_user_apikey'),
                 'format' => $this->response_format,

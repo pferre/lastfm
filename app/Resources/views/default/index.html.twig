@@ -4,11 +4,25 @@
     <div id="wrapper">
         <div id="container">
             <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
+                <h1><span>Lastfm Member Info</span></h1>
             </div>
 
             <div id="status">
-                {{ dump(info) }}
+                <ul style="list-style: none;">
+                    {% for user in info %}
+                        <li>Real name: {{ user.realname }}</li>
+                        <li>Username: {{ user.name }}</li>
+
+                        <li>
+                            Member since 
+                            {% for dr in user.registered|slice(0,1) %}
+                                {{ dr|date  }}
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                    <li>Member Picture:</li>
+                    <li><img src="{{ image.src }}" alt=""></li>
+                </ul>
             </div>
 
         </div>
