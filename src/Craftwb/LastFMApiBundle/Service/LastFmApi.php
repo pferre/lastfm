@@ -34,13 +34,16 @@ class LastFmApi
 
     /**
      * @param $method
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function callApi($method)
     {
-        $this->client->get(
+        $response = $this->client->get(
             $this->container->getParameter('lastfm_base_uri'),
             $this->requestParameters($method)
         );
+
+        return $response;
     }
 
     /**
