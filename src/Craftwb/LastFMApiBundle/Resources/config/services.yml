@@ -1,0 +1,4 @@
+services:
+    lastfm:
+        class: Craftwb\LastFMApiBundle\Service\LastFmApi
+        arguments: [ "@service_container" ]

@@ -1,0 +1,8 @@
+#craftwb_last_fm_api:
+#    resource: "@CraftwbLastFMApiBundle/Controller/"
+#    type:     annotation
+#    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
