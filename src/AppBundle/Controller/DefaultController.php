@@ -9,16 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/lastfm/userinfo", name="homepage")
+     * @Route("/", name="homepage")
      */
     public function indexAction()
     {
         $lastm = $this->get('lastfm');
-        $info = $lastm->callApi($method = 'user.getTopArtists');
-        $data = json_decode($info, true);
+        $info = $lastm->callApi($method = 'user.getInfo');
 
         return $this->render('default/index.html.twig', [
-            'info' => $data
+            'info' => $info
         ]);
     }
 }

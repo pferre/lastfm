@@ -6,7 +6,7 @@ namespace Craftwb\LastFMApiBundle\Service;
 use GuzzleHttp\Client;
 use Symfony\Component\DependencyInjection\Container;
 
-class LastFmApi
+class GuzzleApiClient implements ApiClient
 {
     /**
      * @var Client
@@ -31,19 +31,21 @@ class LastFmApi
 
         $this->container = $container;
     }
-
+    
     /**
      * @param $method
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function callApi($method)
     {
-        $response = $this->client->get(
+        $request = $this->client->get(
             $this->container->getParameter('lastfm_base_uri'),
             $this->requestParameters($method)
         );
 
-        return $response;
+        $response = $request->send();
+
+        return json_decode($response, true);
     }
 
     /**

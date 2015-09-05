@@ -1,4 +1,4 @@
 services:
     lastfm:
-        class: Craftwb\LastFMApiBundle\Service\LastFmApi
+        class: Craftwb\LastFMApiBundle\Service\GuzzleApiClient
         arguments: [ "@service_container" ]
