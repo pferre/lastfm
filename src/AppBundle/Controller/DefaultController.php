@@ -14,7 +14,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $lastm = $this->get('lastfm');
-        $info = $lastm->getUserInfo();
+        $info = $lastm->callApi($method = 'user.getTopArtists');
         $data = json_decode($info, true);
 
         return $this->render('default/index.html.twig', [

@@ -13,7 +13,15 @@ class LastFmApi
      */
     protected $client;
 
+    /**
+     * @var Container
+     */
     protected $container;
+
+    /**
+     * @var string
+     */
+    protected $response_format = 'json';
 
     public function __construct(Container $container)
     {
@@ -25,19 +33,30 @@ class LastFmApi
     }
 
     /**
-     * @param string $format
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param $method
      */
-    public function getUserInfo($format = 'json')
+    public function callApi($method)
     {
-        $this->client->get($this->container->getParameter('lastfm_base_uri'), [
+        $this->client->get(
+            $this->container->getParameter('lastfm_base_uri'),
+            $this->requestParameters($method)
+        );
+    }
+
+    /**
+     * @param $method
+     * @return array
+     */
+    private function requestParameters($method)
+    {
+        return [
             'query' => [
-                'method' => 'user.getinfo',
+                'method' => strtolower($method),
                 'apikey' => $this->container->getParameter('lastfm_user_apikey'),
                 'user' => $this->container->getParameter('lastfm_user'),
-                'format' => $format,
+                'format' => $this->response_format,
             ]
-        ]);
+        ];
     }
 
 }
