@@ -4,6 +4,7 @@
 namespace Craftwb\LastFMApiBundle\Service;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\DependencyInjection\Container;
 
 class GuzzleApiClient implements ApiClient
@@ -25,11 +26,11 @@ class GuzzleApiClient implements ApiClient
 
     public function __construct(Container $container)
     {
+        $this->container = $container;
+
         $client = new Client();
 
         $this->client = $client;
-
-        $this->container = $container;
     }
     
     /**
@@ -38,14 +39,18 @@ class GuzzleApiClient implements ApiClient
      */
     public function callApi($method)
     {
-        $request = $this->client->get(
-            $this->container->getParameter('lastfm_base_uri'),
-            $this->requestParameters($method)
-        );
+        $response = null;
 
-        $response = $request->send();
+        try {
+            $response = $this->client->get(
+                $this->container->getParameter('lastfm_base_uri'),
+                $this->requestParameters($method)
+            );
+        } catch (ClientException $e) {
+            return $e->getResponse();
+        }
 
-        return json_decode($response, true);
+        return json_decode($response->getBody(), true);
     }
 
     /**
@@ -56,9 +61,9 @@ class GuzzleApiClient implements ApiClient
     {
         return [
             'query' => [
-                'method' => strtolower($method),
-                'apikey' => $this->container->getParameter('lastfm_user_apikey'),
+                'method' => $method,
                 'user' => $this->container->getParameter('lastfm_user'),
+                'api_key' => $this->container->getParameter('lastfm_user_apikey'),
                 'format' => $this->response_format,
             ]
         ];
