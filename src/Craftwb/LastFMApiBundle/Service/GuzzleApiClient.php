@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Craftwb\LastFMApiBundle\Service;
 
 use GuzzleHttp\Client;
@@ -68,5 +67,4 @@ class GuzzleApiClient implements ApiClient
             ]
         ];
     }
-
 }

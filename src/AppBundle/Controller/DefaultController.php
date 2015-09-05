@@ -19,6 +19,10 @@ class DefaultController extends Controller
         $image_data = [];
 
         foreach ($info as $data => $value) {
+            // This is a hack to overcome a hash key on the text attribute for the image
+            // Looks like the API is designed to return XML in the first place
+            // Therefore, looks like there is some on the fly conversion for translating
+            // XML to JSON
             if ($value['image']) {
                 $image_data['src'] = $this->extractImageSrc($value);
             }
