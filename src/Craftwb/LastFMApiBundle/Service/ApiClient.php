@@ -2,8 +2,11 @@
 
 namespace Craftwb\LastFMApiBundle\Service;
 
-
 interface ApiClient
 {
-	public function callApi($method);
+	/**
+	 * @var $method | Api method
+	 * @var $user | The user
+	 */
+	public function callApi($method, $user);
 }
