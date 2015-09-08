@@ -34,6 +34,7 @@ class GuzzleApiClient implements ApiClient
     
     /**
      * @param $method
+     * @param $user
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function callApi($method, $user)
