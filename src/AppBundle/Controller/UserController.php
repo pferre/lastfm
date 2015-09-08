@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -23,7 +22,7 @@ class UserController extends Controller
     public function getUserInfo($user)
     {
         $lastfm = $this->get('lastfm.client');
-        $info = $lastfm->callApi($method = 'user.getInfo', $user);
+        $info = $lastfm->callApi('user.getInfo', $user);
         $user_data = [];
         $image_data = [];
 
@@ -50,7 +49,7 @@ class UserController extends Controller
     public function getUserTopTracksAction($user)
     {
         $lastfm = $this->get('lastfm.client');
-        $top_tracks = $lastfm->callApi($method = 'user.getTopTracks', $user);
+        $top_tracks = $lastfm->callApi('user.getTopTracks', $user);
         die(dump($top_tracks));
 
         return ['toptracks' => $top_tracks];
