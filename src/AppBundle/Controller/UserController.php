@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller
+class UserController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -20,7 +20,7 @@ class DefaultController extends Controller
     /**
      * @Route("/{user}/info", name="user_info")
      */
-    public function getUserInfo($user = 'pffred')
+    public function getUserInfo($user)
     {
         $lastfm = $this->get('lastfm.client');
         $info = $lastfm->callApi($method = 'user.getInfo', $user);
@@ -38,7 +38,7 @@ class DefaultController extends Controller
             $user_data[] = $value;
         }
 
-        return $this->render('default/index.html.twig', [
+        return $this->render('user/info.html.twig', [
             'info' => $user_data,
             'image' => $image_data
         ]);
@@ -47,10 +47,10 @@ class DefaultController extends Controller
     /**
      * @Route("/{user}/toptracks", name="toptracks")
      */
-    public function getUserTopTracksAction()
+    public function getUserTopTracksAction($user)
     {
         $lastfm = $this->get('lastfm.client');
-        $top_tracks = $lastfm->callApi($method = 'user.getTopTracks');
+        $top_tracks = $lastfm->callApi($method = 'user.getTopTracks', $user);
         die(dump($top_tracks));
 
         return ['toptracks' => $top_tracks];
