@@ -64,8 +64,10 @@ class UserController extends Controller
         $arr = [];
 
         foreach ($value['image'] as $attrib => $data) {
-            if ($data['#text']) {
+            if (!empty($data['#text'])) {
                 $arr['src'] = $data['#text'];
+            } else {
+                $arr['src'] = '';
             }
         }
         return $arr['src'];

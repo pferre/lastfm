@@ -9,7 +9,7 @@
 
             <div id="status">
                 <ul style="list-style: none;">
-                    {% for user in info %}
+                    {% for user in info if user.realname is defined %}
                         <li>Real name: {{ user.realname }}</li>
                         <li>Username: {{ user.name }}</li>
 
