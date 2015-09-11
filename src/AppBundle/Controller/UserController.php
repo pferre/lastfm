@@ -22,7 +22,13 @@ class UserController extends Controller
     public function getUserInfo($user)
     {
         $lastfm = $this->get('lastfm.client');
-        $info = $lastfm->callApi('user.getInfo', $user);
+        
+        try {
+            $info = $lastfm->callApi('user.getInfo', $user);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
         $user_data = [];
         $image_data = [];
 
