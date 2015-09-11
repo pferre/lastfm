@@ -56,9 +56,11 @@ class UserController extends Controller
     {
         $lastfm = $this->get('lastfm.client');
         $top_tracks = $lastfm->callApi('user.getTopTracks', $user);
-        die(dump($top_tracks));
 
-        return ['toptracks' => $top_tracks];
+        return $this->render('user/toptracks.html.twig', [
+            'toptracks' => $top_tracks,
+            'user' => $user 
+        ]);
     }
 
     /**

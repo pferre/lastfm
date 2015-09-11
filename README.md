@@ -19,7 +19,7 @@ app/console server:start
 Endpoints
 ========================
 Few consumer endpoints currently available:
-* [user.getinfo] (http://www.last.fm/api/show/user.getInfo) - Maps to /{user}/info
+* [user.getinfo](http://www.last.fm/api/show/user.getInfo) - Maps to /{user}/info
 * [user.gettoptracks](http://www.last.fm/api/show/user.getTopTracks) - Maps to /{user}/toptracks
 
 Usage

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div id="wrapper">
+		<div id="container">
+			<div id="welcome">
+				<h1><span>{{ user }}'s top tracks!</span></h1>
+
+				<div id="status">
+					{{ dump(toptracks) }}
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
