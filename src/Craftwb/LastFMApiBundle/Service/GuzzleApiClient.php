@@ -18,11 +18,6 @@ class GuzzleApiClient implements ApiClient
 	 */
 	protected $container;
 
-	/**
-	 * @var string
-	 */
-	protected $response_format = 'json';
-
 	public function __construct( Container $container )
 	{
 		$this->container = $container;
@@ -33,19 +28,20 @@ class GuzzleApiClient implements ApiClient
 	}
 
 	/**
-	 * @param $method
-	 * @param $user
+	 * @param        $method
+	 * @param        $user
+	 * @param string $format
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function call( $method, $user )
+	public function call( $method, $user, $format = 'json' )
 	{
 		$response = null;
 
 		try {
 			$response = $this->client->get(
 				$this->container->getParameter('lastfm_base_uri'),
-				$this->buildRequest($method, $user)
+				$this->buildRequest($method, $user, $format)
 			);
 		} catch (ClientException $e) {
 			return $e->getResponse();
@@ -57,17 +53,18 @@ class GuzzleApiClient implements ApiClient
 	/**
 	 * @param $method
 	 * @param $user
+	 * @param $format
 	 *
 	 * @return array
 	 */
-	private function buildRequest( $method, $user )
+	private function buildRequest( $method, $user, $format )
 	{
 		return [
 			'query' => [
 				'method'  => strtolower($method),
 				'user'    => $user,
 				'api_key' => $this->container->getParameter('lastfm_user_apikey'),
-				'format'  => $this->response_format,
+				'format'  => $format
 			]
 		];
 	}
