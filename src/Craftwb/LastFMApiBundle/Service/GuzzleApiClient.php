@@ -38,14 +38,14 @@ class GuzzleApiClient implements ApiClient
 	 *
 	 * @return \Psr\Http\Message\ResponseInterface
 	 */
-	public function callApi( $method, $user )
+	public function call( $method, $user )
 	{
 		$response = null;
 
 		try {
 			$response = $this->client->get(
 				$this->container->getParameter('lastfm_base_uri'),
-				$this->buildRequestParameters($method, $user)
+				$this->buildRequest($method, $user)
 			);
 		} catch (ClientException $e) {
 			return $e->getResponse();
@@ -60,7 +60,7 @@ class GuzzleApiClient implements ApiClient
 	 *
 	 * @return array
 	 */
-	private function buildRequestParameters( $method, $user )
+	private function buildRequest( $method, $user )
 	{
 		return [
 			'query' => [

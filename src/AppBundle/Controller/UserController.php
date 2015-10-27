@@ -18,13 +18,16 @@ class UserController extends Controller
 
 	/**
 	 * @Route("/{user}/info", name="user_info")
+	 * @param $user
+	 *
+	 * @return string|Response
 	 */
 	public function getUserInfo( $user )
 	{
 		$lastfm = $this->get('lastfm.client');
 
 		try {
-			$info = $lastfm->callApi('user.getInfo', $user);
+			$info = $lastfm->call('user.getInfo', $user);
 		} catch (\Exception $e) {
 			return $e->getMessage();
 		}
@@ -51,11 +54,14 @@ class UserController extends Controller
 
 	/**
 	 * @Route("/{user}/toptracks", name="toptracks")
+	 * @param $user
+	 *
+	 * @return Response
 	 */
 	public function getUserTopTracksAction( $user )
 	{
 		$lastfm = $this->get('lastfm.client');
-		$top_tracks = $lastfm->callApi('user.getTopTracks', $user);
+		$top_tracks = $lastfm->call('user.getTopTracks', $user);
 
 		return $this->render('user/toptracks.html.twig', [
 			'toptracks' => $top_tracks,

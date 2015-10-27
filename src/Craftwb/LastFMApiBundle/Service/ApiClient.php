@@ -8,5 +8,5 @@ interface ApiClient
 	 * @var $method | Api method
 	 * @var $user | The user
 	 */
-	public function callApi( $method, $user );
+	public function call( $method, $user );
 }
