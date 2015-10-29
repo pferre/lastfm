@@ -1,3 +1,5 @@
+[ ![Codeship Status for pferre/lastfm](https://codeship.com/projects/72f1f9f0-4a75-0133-5634-02da4d06d74f/status?branch=master)](https://codeship.com/projects/105898)
+
 LastFM API Client 
 ========================
 Simple LastFM consumer application, to display statistics for a user based on
