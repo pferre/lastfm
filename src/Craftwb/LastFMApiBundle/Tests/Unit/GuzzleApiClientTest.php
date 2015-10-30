@@ -3,9 +3,10 @@
 
 namespace Craftwb\LastFMApiBundle\Tests\Unit;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Craftwb\LastFMApiBundle\Service\GuzzleApiClient;
+use GuzzleHttp\Exception\ClientException;
 
-class GuzzleApiClientTest extends KernelTestCase
+class GuzzleApiClientTest extends \PHPUnit_Framework_TestCase
 {
 	protected $file_path = 'src/Craftwb/LastFMApiBundle/Tests/Data/data.json';
 	protected $json;
@@ -20,7 +21,7 @@ class GuzzleApiClientTest extends KernelTestCase
 	/**
 	 * @test
 	 */
-	public function test_user_getinfo_returns_json()
+	public function test_user_get_info_returns_json()
 	{
 		$sut = $this->getMockBuilder('Craftwb\LastFMApiBundle\Service\GuzzleApiClient')
 			->disableOriginalConstructor()
@@ -36,17 +37,10 @@ class GuzzleApiClientTest extends KernelTestCase
 
 	/*
 	 * @test
+	 * @expectedException GuzzleHttp\Exception\ClientException
 	 */
-	public function test_it_throws_a_client_exception()
+	public function test_user_get_info_returns_exception()
 	{
-		$sut = $this->getMockBuilder('GuzzleHttp\Client')
-			->disableOriginalConstructor()
-			->getMock();
 
-		$sut->expects($this->any())
-			->method('get')
-			->with('user.getInfo', $this->username);
-
-		$this->setExpectedException('GuzzleHttp\Exception\ClientException');
 	}
 }
