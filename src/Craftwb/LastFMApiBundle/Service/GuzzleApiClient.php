@@ -2,29 +2,28 @@
 
 namespace Craftwb\LastFMApiBundle\Service;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\DependencyInjection\Container;
 
 class GuzzleApiClient implements ApiClient
 {
 	/**
-	 * @var Client
+	 * @var GuzzleClient
 	 */
 	protected $client;
 
 	/**
 	 * @var Container
+	 * @var GuzzleClient
 	 */
 	protected $container;
 
-	public function __construct( Container $container )
+	public function __construct( Container $container, GuzzleClient $guzzle )
 	{
 		$this->container = $container;
 
-		$client = new Client();
-
-		$this->client = $client;
+		$this->client = $guzzle;
 	}
 
 	/**
@@ -44,7 +43,7 @@ class GuzzleApiClient implements ApiClient
 				$this->buildRequest($method, $user, $format)
 			);
 		} catch (ClientException $e) {
-			return $e->getResponse();
+			throw $e;
 		}
 
 		return json_decode($response->getBody(), true);

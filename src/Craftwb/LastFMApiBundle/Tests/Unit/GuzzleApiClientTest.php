@@ -5,6 +5,7 @@ namespace Craftwb\LastFMApiBundle\Tests\Unit;
 
 use Craftwb\LastFMApiBundle\Service\GuzzleApiClient;
 use GuzzleHttp\Exception\ClientException;
+use Psr\Http\Message\RequestInterface;
 
 class GuzzleApiClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,11 +24,11 @@ class GuzzleApiClientTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function test_user_get_info_returns_json()
 	{
-		$sut = $this->getMockBuilder('Craftwb\LastFMApiBundle\Service\GuzzleApiClient')
+		$sut = $this->getMockBuilder(GuzzleApiClient::class)
 			->disableOriginalConstructor()
 			->getMock();
 
-		$sut->expects($this->any())
+		$sut->expects($this->once())
 			->method('call')
 			->with('user.getInfo', $this->username)
 			->willReturn($this->json);
@@ -40,7 +41,19 @@ class GuzzleApiClientTest extends \PHPUnit_Framework_TestCase
 	 * @expectedException GuzzleHttp\Exception\ClientException
 	 */
 	public function test_user_get_info_returns_exception()
-	{
+	{	
+		$request = $this->getMockBuilder(RequestInterface::class)
+						->disableOriginalConstructor()
+						->getMock();
 
+		$sut = $this->getMockBuilder(GuzzleApiClient::class)
+			->disableOriginalConstructor()
+			->setMethods(['call'])
+			->getMock();
+		$sut->expects($this->once())->method('call')->willThrowException(new ClientException('', $request));
+
+		$this->expectException(ClientException::class);
+
+		$sut->call('user.getInfo', $this->username);
 	}
 }
